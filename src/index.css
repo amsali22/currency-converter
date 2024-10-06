@@ -117,18 +117,3 @@ button {
   }
 }
 
-
-.theme-toggle-btn {
-  padding: 0.5em 1em;
-  font-size: 1em;
-  font-weight: 500;
-  border: none;
-  border-radius: 8px;
-  background-color: #1E1E1E; /* Dark background for dark mode */
-  color: #ffffff; /* White text */
-  cursor: pointer;
-}
-
-.theme-toggle-btn:hover {
-  background-color: #333333; /* Lighter background on hover */
-}
