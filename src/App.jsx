@@ -4,7 +4,6 @@ import './App.css';
 import './index.css';
 
 // icons import
-import { VscDebugRestart, VscDebugStart, VscSymbolColor } from "react-icons/vsc";
 
 
 // Importing components
@@ -134,10 +133,10 @@ const App = () => {
         {/* Buttons */}
         <div className="buttonsection">
           <button className="convertbtn" onClick={handleConvert}>
-            Convert <VscDebugStart />
+            Convert 
           </button>
           <button className="refreshbtn" onClick={handleRefresh}>
-            Refresh <VscDebugRestart />
+            Refresh 
           </button>
         </div>
       </div>
