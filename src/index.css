@@ -107,10 +107,10 @@ button {
   :root {
     --text-color: #213547;
     --background-color: #ffffff;
-    --card-background: #f9f9f9; /* Adjusted card background for light mode */
-    --input-background: #ffffff; /* Input background for light mode */
-    --button-background: #e0e0e0; /* Button background for light mode */
-    --button-color: #000000; /* Button text color for light mode */
+    --card-background: #f9f9f9;
+    --input-background: #ffffff;
+    --button-background: #e0e0e0;
+    --button-color: #000000;
   }
 
   a:hover {
@@ -118,3 +118,84 @@ button {
   }
 }
 
+/* Responsive Media Queries */
+
+/* Extra small devices (phones, less than 600px) */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2em;
+  }
+
+  .convcard {
+    padding: 2em;
+  }
+
+  .inputtext, .dropdownselect, .result {
+    font-size: 0.9em;
+  }
+
+  button {
+    padding: 0.4em 1.5em;
+    font-size: 0.9em;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media (min-width: 600px) and (max-width: 768px) {
+  h1 {
+    font-size: 2.5em;
+  }
+
+  .convcard {
+    padding: 3em;
+  }
+
+  .inputtext, .dropdownselect, .result {
+    font-size: 1em;
+  }
+
+  button {
+    padding: 0.5em 1.75em;
+    font-size: 1em;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  h1 {
+    font-size: 2.8em;
+  }
+
+  .convcard {
+    padding: 4em;
+  }
+
+  .inputtext, .dropdownselect, .result {
+    font-size: 1.1em;
+  }
+
+  button {
+    padding: 0.6em 1.85em;
+    font-size: 1.1em;
+  }
+}
+
+/* Large devices (laptops/desktops, 1024px and up) */
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 3.2em;
+  }
+
+  .convcard {
+    padding: 5em;
+  }
+
+  .inputtext, .dropdownselect, .result {
+    font-size: 1.2em;
+  }
+
+  button {
+    padding: 0.7em 2em;
+    font-size: 1.2em;
+  }
+}
