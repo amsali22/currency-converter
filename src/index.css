@@ -9,8 +9,8 @@
 
   color-scheme: light dark;
   --text-color: rgba(255, 255, 255, 0.87);
-  --background-color: #121212;
-  --card-background: #1E1E1E;
+  --background-color: #0e0f0f;
+  --card-background: #171819;
   --input-background: #121212;
   --button-background: #121212;
   --button-color: #ffffff;
@@ -20,6 +20,19 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 2em auto;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+}
+
 
 body {
   margin: 0;
@@ -122,6 +135,7 @@ button {
 
 /* Extra small devices (phones, less than 600px) */
 @media (max-width: 600px) {
+
   h1 {
     font-size: 2em;
   }
@@ -142,6 +156,7 @@ button {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media (min-width: 600px) and (max-width: 768px) {
+
   h1 {
     font-size: 2.5em;
   }

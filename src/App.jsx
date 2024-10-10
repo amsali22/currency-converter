@@ -3,13 +3,11 @@ import axios from 'axios';
 import './App.css';
 import './index.css';
 
-// icons import
-
-
-// Importing components
+// Import components
 import CurrencySelector from './components/CurrencySelector';
 import AmountInput from './components/AmountInput';
 import ConversionResult from './components/ConversionResult';
+import RateChart from './components/RateChart'; // New Chart Component
 
 const App = () => {
   const [amount, setAmount] = useState(1); // Default amount to convert
@@ -37,8 +35,6 @@ const App = () => {
     }
   };
 
-
-  
   // Fetch currency and country data from an API
   const fetchCurrenciesWithCountries = async () => {
     try {
@@ -76,7 +72,6 @@ const App = () => {
     setConvertedAmount(result);
   };
 
-
   // Function to refresh the rates when 'Refresh' button is clicked
   const handleRefresh = async () => {
     setLoading(true);
@@ -87,15 +82,12 @@ const App = () => {
     }
   };
 
-  
-  
-
   if (loading) return <div className="text-white">Loading...</div>;
   if (error) return <div className="text-white">{error}</div>;
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center">
-      <h1 className="text-4xl font-bold text-white mb-8">Currency Converter</h1>
+    <div>
+      <h1>Currency Converter</h1>
       <div className="convcard">
         {/* Amount Input */}
         <label className="title">Amount</label>
@@ -104,7 +96,7 @@ const App = () => {
         {/* From Currency Selector */}
         <label className="title">From Currency</label>
         <CurrencySelector
-          currencies={currenciesWithCountries} // Use updated state
+          currencies={currenciesWithCountries}
           selectedCurrency={fromCurrency}
           onChange={(e) => setFromCurrency(e.target.value)}
         />
@@ -112,7 +104,7 @@ const App = () => {
         {/* To Currency Selector */}
         <label className="title">To Currency</label>
         <CurrencySelector
-          currencies={currenciesWithCountries} // Use updated state
+          currencies={currenciesWithCountries}
           selectedCurrency={toCurrency}
           onChange={(e) => setToCurrency(e.target.value)}
         />
@@ -130,6 +122,9 @@ const App = () => {
           </div>
         )}
 
+        {/* Rate Chart Component */}
+        <RateChart fromCurrency={fromCurrency} toCurrency={toCurrency} />
+
         {/* Buttons */}
         <div className="buttonsection">
           <button className="convertbtn" onClick={handleConvert}>
@@ -145,5 +140,3 @@ const App = () => {
 };
 
 export default App;
-
-
