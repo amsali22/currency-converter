@@ -22,6 +22,8 @@ const App = () => {
   const [convertedAmount, setConvertedAmount] = useState(null); // Result of conversion
   const [currenciesWithCountries, setCurrenciesWithCountries] = useState([]); // To store currencies with countries
 
+  const [timeLastUpdate, setTimeLastUpdate] = useState(null); // Add a state for storing the last update time
+
   // Fetch the exchange rates when the component mounts
   const fetchRates = async () => {
     try {
@@ -29,6 +31,7 @@ const App = () => {
       const response = await axios.get(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/${fromCurrency}`);
       setRates(response.data.conversion_rates);
       setRate(response.data.conversion_rates[toCurrency]);
+      setTimeLastUpdate(response.data.time_last_update_utc); // Set the time_last_update
       setError(null);
     } catch (error) {
       setError('Error fetching exchange rates');
@@ -94,13 +97,13 @@ const App = () => {
   if (error) return <div className="text-white">{error}</div>;
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center">
-      <h1 className="text-4xl font-bold text-white mb-8">Currency Converter</h1>
+    <div>
+      <h1>Currency Converter</h1>
       <div className="convcard">
         {/* Amount Input */}
         <label className="title">Amount</label>
         <AmountInput amount={amount} onChange={(e) => setAmount(e.target.value)} />
-
+  
         {/* From Currency Selector */}
         <label className="title">From Currency</label>
         <CurrencySelector
@@ -108,7 +111,7 @@ const App = () => {
           selectedCurrency={fromCurrency}
           onChange={(e) => setFromCurrency(e.target.value)}
         />
-
+  
         {/* To Currency Selector */}
         <label className="title">To Currency</label>
         <CurrencySelector
@@ -116,7 +119,7 @@ const App = () => {
           selectedCurrency={toCurrency}
           onChange={(e) => setToCurrency(e.target.value)}
         />
-
+  
         {/* Conversion Result */}
         {convertedAmount && (
           <div className="mt-4">
@@ -129,7 +132,14 @@ const App = () => {
             />
           </div>
         )}
-
+  
+        {/* Time Last Update */}
+        {timeLastUpdate && (
+          <div className="mt-2 text-white">
+            <p>Last updated: {new Date(timeLastUpdate).toLocaleString()}</p>
+          </div>
+        )}
+  
         {/* Buttons */}
         <div className="buttonsection">
           <button className="convertbtn" onClick={handleConvert}>
@@ -141,7 +151,7 @@ const App = () => {
         </div>
       </div>
     </div>
-  );
+  );  
 };
 
 export default App;
