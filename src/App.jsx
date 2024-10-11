@@ -1,10 +1,7 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import './App.css';
-import './index.css';
-
-// icons import
-
+import { useEffect, useState } from 'react'; // Importing hooks from React
+import axios from 'axios'; // Importing axios for API calls
+import './App.css'; // Importing CSS files
+import './index.css'; // Importing CSS files
 
 // Importing components
 import CurrencySelector from './components/CurrencySelector';
@@ -12,89 +9,83 @@ import AmountInput from './components/AmountInput';
 import ConversionResult from './components/ConversionResult';
 
 const App = () => {
-  const [amount, setAmount] = useState(1); // Default amount to convert
-  const [fromCurrency, setFromCurrency] = useState('USD'); // Default from currency
-  const [toCurrency, setToCurrency] = useState('EUR'); // Default to currency
-  const [rate, setRate] = useState(1); // Default exchange rate
-  const [rates, setRates] = useState({}); // All currency rates
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-  const [convertedAmount, setConvertedAmount] = useState(null); // Result of conversion
-  const [currenciesWithCountries, setCurrenciesWithCountries] = useState([]); // To store currencies with countries
+  const [amount, setAmount] = useState(1); // State for the amount to convert, default is 1
+  const [fromCurrency, setFromCurrency] = useState('USD'); // State for the currency to convert from, default is USD
+  const [toCurrency, setToCurrency] = useState('EUR'); // State for the currency to convert to, default is EUR
+  const [rate, setRate] = useState(1); // State for the exchange rate, default is 1
+  const [rates, setRates] = useState({}); // State for all currency rates
+  const [loading, setLoading] = useState(true); // State for loading status
+  const [error, setError] = useState(null); // State for error status
+  const [convertedAmount, setConvertedAmount] = useState(null); // State for the result of the conversion
+  const [currenciesWithCountries, setCurrenciesWithCountries] = useState([]); // State for storing currencies with countries
 
-  const [timeLastUpdate, setTimeLastUpdate] = useState(null); // Add a state for storing the last update time
+  const [timeLastUpdate, setTimeLastUpdate] = useState(null); // State for storing the last update time
 
-  // Fetch the exchange rates when the component mounts
+  // Function to fetch the exchange rates when the component mounts
   const fetchRates = async () => {
     try {
       const apiKey = import.meta.env.VITE_API_KEY; // Fetch API key from .env
-      const response = await axios.get(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/${fromCurrency}`);
-      setRates(response.data.conversion_rates);
-      setRate(response.data.conversion_rates[toCurrency]);
-      setTimeLastUpdate(response.data.time_last_update_utc); // Set the time_last_update
-      setError(null);
+      const response = await axios.get(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/${fromCurrency}`); // API call to get exchange rates
+      setRates(response.data.conversion_rates); // Set the rates state with the fetched data
+      setRate(response.data.conversion_rates[toCurrency]); // Set the rate state with the fetched data
+      setTimeLastUpdate(response.data.time_last_update_utc); // Set the time_last_update state with the fetched data
+      setError(null); // Reset the error state
     } catch (error) {
-      setError('Error fetching exchange rates');
+      setError('Error fetching exchange rates'); // Set the error state if there's an error
     } finally {
-      setLoading(false);
+      setLoading(false); // Set the loading state to false
     }
   };
 
-
-  
-  // Fetch currency and country data from an API
+  // Function to fetch currency and country data from an API
   const fetchCurrenciesWithCountries = async () => {
     try {
-      const response = await axios.get('https://restcountries.com/v3.1/all');
+      const response = await axios.get('https://restcountries.com/v3.1/all'); // API call to get country and currency data
       const currencies = response.data.reduce((acc, country) => {
         if (country.currencies) {
-          const currencyCodes = Object.keys(country.currencies);
+          const currencyCodes = Object.keys(country.currencies); // Get currency codes
           currencyCodes.forEach((code) => {
             acc[code] = country.currencies[code].name; // Store currency code and its country name
           });
         }
         return acc;
       }, {});
-      setCurrenciesWithCountries(currencies);
+      setCurrenciesWithCountries(currencies); // Set the currenciesWithCountries state with the fetched data
     } catch (error) {
-      console.error('Error fetching country and currency data', error);
+      console.error('Error fetching country and currency data', error); // Log error if there's an error
     }
   };
 
   useEffect(() => {
-    fetchRates();
-    fetchCurrenciesWithCountries(); // Fetch currency and country data
+    fetchRates(); // Fetch rates when the component mounts or fromCurrency changes
+    fetchCurrenciesWithCountries(); // Fetch currency and country data when the component mounts
   }, [fromCurrency]);
 
   useEffect(() => {
     if (rates) {
-      setRate(rates[toCurrency]);
+      setRate(rates[toCurrency]); // Update the rate state when toCurrency or rates change
     }
   }, [toCurrency, rates]);
 
   // Function to handle conversion when 'Convert' button is clicked
   const handleConvert = () => {
-    if (!rate || !amount) return;
+    if (!rate || !amount) return; // Return if rate or amount is not set
     const result = (amount * rate).toFixed(2); // Simple conversion with 2 decimal places
-    setConvertedAmount(result);
+    setConvertedAmount(result); // Set the convertedAmount state with the result
   };
-
 
   // Function to refresh the rates when 'Refresh' button is clicked
   const handleRefresh = async () => {
-    setLoading(true);
-    await fetchRates();
+    setLoading(true); // Set the loading state to true
+    await fetchRates(); // Fetch rates
     if (amount && rate) {
-      const result = (amount * rate).toFixed(2);
-      setConvertedAmount(result); // Update the result if the rates have changed
+      const result = (amount * rate).toFixed(2); // Simple conversion with 2 decimal places
+      setConvertedAmount(result); // Update the convertedAmount state if the rates have changed
     }
   };
 
-  
-  
-
-  if (loading) return <div className="text-white">Loading...</div>;
-  if (error) return <div className="text-white">{error}</div>;
+  if (loading) return <div className="text-white">Loading...</div>; // Show loading message if loading state is true
+  if (error) return <div className="text-white">{error}</div>; // Show error message if error state is set
 
   return (
     <div>
@@ -155,5 +146,3 @@ const App = () => {
 };
 
 export default App;
-
-
